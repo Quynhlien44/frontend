@@ -18,7 +18,7 @@ const PetCreateForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Call API to create pet with formData
     console.log(formData); // Replace with API call
