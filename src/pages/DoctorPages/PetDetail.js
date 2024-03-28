@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import petApi from '../services/petApi';
-import userApi from '../services/userApi';
+import petApi from "../../services/petApi";
+import userApi from "../../services/userApi";
 
 const PetDetail = () => {
   const { id } = useParams();
@@ -14,22 +14,24 @@ const PetDetail = () => {
     const fetchPet = async () => {
       try {
         const response = await petApi.getOne(id);
-        console.log('Data of fetching pet by id', response);
-        console.log('Data of ownerId', response.ownerId);
+        console.log("Data of fetching pet by id", response);
+        console.log("Data of ownerId", response.ownerId);
         setPet(response);
         setLoading(false);
-  
+
         if (response && response.ownerId) {
           const ownerResponse = await userApi.getUser();
-          console.log('Owner data:', ownerResponse);
-  
+          console.log("Owner data:", ownerResponse);
+
           // Find the owner with the matching ID
-          const owner = ownerResponse.find(user => user.id === response.ownerId);
-          console.log('Filtered owner:', owner);
+          const owner = ownerResponse.find(
+            (user) => user.id === response.ownerId
+          );
+          console.log("Filtered owner:", owner);
           setOwner(owner);
         }
       } catch (error) {
-        console.error('Error fetching pet:', error);
+        console.error("Error fetching pet:", error);
         setLoading(false);
       }
     };
@@ -57,7 +59,9 @@ const PetDetail = () => {
           <p>
             Owner: {owner.name} (ID: {owner.id})
           </p>
-        ): <p>Owner not found</p>}
+        ) : (
+          <p>Owner not found</p>
+        )}
       </div>
     </div>
   );
