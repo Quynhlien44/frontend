@@ -27,7 +27,7 @@ const DoctorVisits = () => {
       }
     };
     getVisits();
-  }, []);
+  }, [visitList]);
 
   const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ const DoctorVisits = () => {
 
   return (
     <React.Fragment>
-      <PageHeader title="Visits List" />
+      <PageHeader title="Visits List Of All Pets" />
       <DataGrid
         rows={visitList}
         columns={[

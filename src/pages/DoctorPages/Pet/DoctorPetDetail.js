@@ -2,13 +2,23 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import petApi from "../../../services/petApi";
 import userApi from "../../../services/userApi";
-import { Typography, Paper, Grid, CircularProgress } from "@mui/material";
+import {
+  Typography,
+  Paper,
+  Grid,
+  CircularProgress,
+  Button,
+} from "@mui/material";
+import { AddVisitModalById } from "../../../components";
+import { useNavigate } from "react-router-dom";
 
 const DoctorPetDetail = () => {
   const { id } = useParams();
   const [pet, setPet] = useState(null);
   const [owner, setOwner] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAddVisitModalOpen, setIsAddVisitModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPetById = async () => {
@@ -20,7 +30,6 @@ const DoctorPetDetail = () => {
 
         if (response && response.ownerId) {
           const ownerResponse = await userApi.getUser();
-          // Find the owner with the matching ID
           const owner = ownerResponse.find(
             (user) => user.id === response.ownerId
           );
@@ -34,6 +43,15 @@ const DoctorPetDetail = () => {
 
     fetchPetById();
   }, [id]);
+
+  const handleOpenAddVisitModal = () => {
+    setIsAddVisitModalOpen(true);
+  };
+
+  const handleCloseAddVisitModal = () => {
+    setIsAddVisitModalOpen(false);
+    navigate("/doctor/doctor/visits");
+  };
 
   if (loading) {
     return (
@@ -99,6 +117,23 @@ const DoctorPetDetail = () => {
         </Typography>
         <Typography variant="body1">{pet.doctorsComment}</Typography>
       </Paper>
+
+      {/* "Book a Visit" Button */}
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleOpenAddVisitModal}
+        style={{ marginBottom: 20 }}
+      >
+        Book a Visit
+      </Button>
+
+      {/* Add Visit Modal */}
+      <AddVisitModalById
+        isOpen={isAddVisitModalOpen}
+        handleClose={handleCloseAddVisitModal}
+        petId={pet.id}
+      />
     </div>
   );
 };
