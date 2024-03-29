@@ -10,7 +10,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwicm9sZ
 
 {
   "name": "Fluffy",
-  "petType": "Dog",
+  "petType": "Frog",
   "dob": "2019-01-15",
   "ownerId": 1
 }

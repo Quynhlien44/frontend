@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { OwnerSideBar, TopNav } from "../../components";
 import avtImage from "../../assets/img/owner-avatar.jpg";
 
+
 import React from "react";
 
 const OwnerLayout = () => {

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import petApi from "../../services/petApi";
-import userApi from "../../services/userApi";
+import petApi from "../../../services/petApi";
+import userApi from "../../../services/userApi";
 
-const PetDetail = () => {
+const DoctorPetDetail = () => {
   const { id } = useParams();
   const [pet, setPet] = useState(null);
   const [owner, setOwner] = useState(null);
@@ -67,4 +67,4 @@ const PetDetail = () => {
   );
 };
 
-export default PetDetail;
+export default DoctorPetDetail;

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
-import { Grid, FormControlLabel, Checkbox } from "@mui/material";
-import petApi from "../../services/petApi";
-import { PageHeader } from "../../components";
+import { Grid, FormControlLabel, Checkbox, Button } from "@mui/material";
+import petApi from "../../../services/petApi";
+import { CreateNewPetModal, PageHeader } from "../../../components";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 
-const Pet = () => {
+const DoctorPets = () => {
   const [petList, setPetList] = useState([]);
   const [pageSize, setPageSize] = useState(9);
   const [showOnlyAlive, setShowOnlyAlive] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const getPets = async () => {
@@ -34,6 +35,14 @@ const Pet = () => {
     setShowOnlyAlive((prevState) => !prevState);
   };
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   const filteredPetList = showOnlyAlive
     ? petList.filter((pet) => pet.status === "alive")
     : petList;
@@ -41,9 +50,11 @@ const Pet = () => {
   return (
     <React.Fragment>
       <PageHeader title="Pets List" />
+
+      {/* Grid for Checkbox and Button */}
       <Grid
         container
-        justifyContent="flex-end"
+        justifyContent="space-between"
         alignItems="center"
         marginBottom={2}
       >
@@ -53,32 +64,38 @@ const Pet = () => {
           }
           label="Show Only Alive Pets"
         />
+        {/* Button to Create New Pet */}
+        <Button variant="contained" color="primary" onClick={handleOpenModal}>
+          Create a New Pet
+        </Button>
       </Grid>
 
       <DataGrid
         rows={filteredPetList}
         columns={[
           { field: "id", headerName: "ID", width: 100 },
-          { field: "name", headerName: "Name", width: 150 },
-          { field: "type", headerName: "Type", width: 150 },
-          { field: "status", headerName: "Status", width: 200 },
-          { field: "dob", headerName: "DOB", width: 200 },
           {
-            field: "details",
-            headerName: "Details",
-            width: 150,
+            field: "name",
+            headerName: "Name",
+            width: 200,
             renderCell: (params) => (
               <Link to={`/doctor/doctor/pets/${params.row.id}`}>
-                <ArrowOutwardIcon />
+                {params.row.name}
               </Link>
             ),
           },
+          { field: "type", headerName: "Type", width: 200 },
+          { field: "status", headerName: "Status", width: 200 },
+          { field: "dob", headerName: "DOB", width: 200 },
         ]}
         pageSize={pageSize}
         autoHeight
       />
+
+      {/* Modal for Creating New Pet */}
+      <CreateNewPetModal isOpen={isModalOpen} handleClose={handleCloseModal} />
     </React.Fragment>
   );
 };
 
-export default Pet;
+export default DoctorPets;

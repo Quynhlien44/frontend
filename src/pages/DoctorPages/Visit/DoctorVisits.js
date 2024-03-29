@@ -4,11 +4,11 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Grid } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
-import visitApi from "../../services/visitApi";
-import { PageHeader } from "../../components";
+import visitApi from "../../../services/visitApi";
+import { PageHeader } from "../../../components";
 import { useNavigate } from "react-router-dom";
 
-const Visit = () => {
+const DoctorVisits = () => {
   const [visitList, setVisitList] = useState([]);
 
   useEffect(() => {
@@ -63,4 +63,4 @@ const Visit = () => {
   );
 };
 
-export default Visit;
+export default DoctorVisits;
