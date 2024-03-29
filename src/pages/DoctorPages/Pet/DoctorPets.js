@@ -3,14 +3,21 @@ import { Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { Grid, FormControlLabel, Checkbox, Button } from "@mui/material";
 import petApi from "../../../services/petApi";
-import { CreateNewPetModal, PageHeader } from "../../../components";
-import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
+import {
+  UpdateAPetModal,
+  CreateNewPetModal,
+  PageHeader,
+  DoctorPetGrid,
+  CreatePetButton,
+} from "../../../components";
 
 const DoctorPets = () => {
   const [petList, setPetList] = useState([]);
   const [pageSize, setPageSize] = useState(9);
   const [showOnlyAlive, setShowOnlyAlive] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPet, setSelectedPet] = useState(null);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
   useEffect(() => {
     const getPets = async () => {
@@ -25,11 +32,11 @@ const DoctorPets = () => {
         }));
         setPetList(transformedPetList);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
     getPets();
-  }, []);
+  }, [petList]);
 
   const handleCheckboxChange = () => {
     setShowOnlyAlive((prevState) => !prevState);
@@ -41,6 +48,28 @@ const DoctorPets = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleUpdateModalOpen = (pet) => {
+    setSelectedPet(pet);
+    setIsUpdateModalOpen(true);
+  };
+
+  const handleUpdateModalClose = () => {
+    setIsUpdateModalOpen(false);
+  };
+
+  const handleUpdatePet = async (updatedPet) => {
+    try {
+      const response = await petApi.update(selectedPet.id, updatedPet);
+      const updatePetList = petList.map((pet) =>
+        pet.id === selectedPet.id ? { ...response, id: selectedPet.id } : pet
+      );
+      setPetList(updatePetList);
+      handleUpdateModalClose();
+    } catch (err) {
+      console.error(`Error updating pet ${updatedPet.name}`, err);
+    }
   };
 
   const filteredPetList = showOnlyAlive
@@ -58,6 +87,7 @@ const DoctorPets = () => {
         alignItems="center"
         marginBottom={2}
       >
+        {/* Alive Check box */}
         <FormControlLabel
           control={
             <Checkbox checked={showOnlyAlive} onChange={handleCheckboxChange} />
@@ -65,35 +95,24 @@ const DoctorPets = () => {
           label="Show Only Alive Pets"
         />
         {/* Button to Create New Pet */}
-        <Button variant="contained" color="primary" onClick={handleOpenModal}>
-          Create a New Pet
-        </Button>
+        <CreatePetButton onClick={handleOpenModal} />
       </Grid>
 
-      <DataGrid
-        rows={filteredPetList}
-        columns={[
-          { field: "id", headerName: "ID", width: 100 },
-          {
-            field: "name",
-            headerName: "Name",
-            width: 200,
-            renderCell: (params) => (
-              <Link to={`/doctor/doctor/pets/${params.row.id}`}>
-                {params.row.name}
-              </Link>
-            ),
-          },
-          { field: "type", headerName: "Type", width: 200 },
-          { field: "status", headerName: "Status", width: 200 },
-          { field: "dob", headerName: "DOB", width: 200 },
-        ]}
+      <DoctorPetGrid
+        petList={filteredPetList}
+        handleUpdateModalOpen={handleUpdateModalOpen}
         pageSize={pageSize}
-        autoHeight
       />
 
       {/* Modal for Creating New Pet */}
       <CreateNewPetModal isOpen={isModalOpen} handleClose={handleCloseModal} />
+      {/* Modal for Updating a Pet */}
+      <UpdateAPetModal
+        isOpen={isUpdateModalOpen}
+        handleClose={handleUpdateModalClose}
+        pet={selectedPet}
+        handleUpdate={handleUpdatePet}
+      />
     </React.Fragment>
   );
 };

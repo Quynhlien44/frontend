@@ -5,3 +5,6 @@ export { default as PageHeader } from "./Header/PageHeader";
 export { default as VisitCreateForm } from "./Forms/VisitCreateForm";
 export { default as PetCreateForm } from "./Forms/PetCreateForm";
 export { default as CreateNewPetModal } from "./Modals/CreateNewPetModal";
+export { default as UpdateAPetModal } from "./Modals/UpdateAPetModal";
+export { default as DoctorPetGrid } from "./Grids/DoctorPetGrid";
+export { default as CreatePetButton } from "./Buttons/CreatePetButton";

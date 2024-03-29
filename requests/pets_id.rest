@@ -1,5 +1,5 @@
 ### TODO: Get pet by id
-GET http://localhost:4000/pets/8
+GET http://localhost:4000/pets/2
 Content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwicm9sZSI6ImRvY3RvciIsImlhdCI6MTUxNjIzOTAyMn0.0_MKcjJoHX-Vsjb4vVlWZLZMY-45nMQ22MTXUCAQgng
 
