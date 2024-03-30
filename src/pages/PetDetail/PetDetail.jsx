@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import petApi from "../../../services/petApi";
-import userApi from "../../../services/userApi";
+import petApi from "../../services/petApi";
+import userApi from "../../services/userApi";
 import {
   Typography,
   Paper,
@@ -9,10 +9,10 @@ import {
   CircularProgress,
   Button,
 } from "@mui/material";
-import { AddVisitModalById } from "../../../components";
+import { AddVisitModalById } from "../../components";
 import { useNavigate } from "react-router-dom";
 
-const DoctorPetDetail = () => {
+const PetDetail = () => {
   const { id } = useParams();
   const [pet, setPet] = useState(null);
   const [owner, setOwner] = useState(null);
@@ -138,4 +138,4 @@ const DoctorPetDetail = () => {
   );
 };
 
-export default DoctorPetDetail;
+export default PetDetail;
