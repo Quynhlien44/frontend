@@ -7,13 +7,13 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
   ClinicLayout,
+  LoginPage,
   DoctorLayout,
   OwnerLayout,
   DoctorPets,
   DoctorPetDetail,
   //PetCreate,
   DoctorVisits,
-
 } from "./pages";
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<ClinicLayout />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/doctor" element={<DoctorLayout />}>
           <Route path="/doctor/doctor/pets" index element={<DoctorPets />} />
           <Route path="/doctor/doctor/pets/:id" element={<DoctorPetDetail />} />

@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
-import { Grid } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
 
 import visitApi from "../../../services/visitApi";
 import { PageHeader } from "../../../components";
-import { useNavigate } from "react-router-dom";
 
 const DoctorVisits = () => {
   const [visitList, setVisitList] = useState([]);
@@ -29,12 +25,6 @@ const DoctorVisits = () => {
     getVisits();
   }, [visitList]);
 
-  const navigate = useNavigate();
-
-  const VisitCreateButtonHandler = () => {
-    navigate("/doctor/doctor/visits/create");
-  };
-
   return (
     <React.Fragment>
       <PageHeader title="Visits List Of All Pets" />
@@ -48,17 +38,6 @@ const DoctorVisits = () => {
         ]}
         autoHeight
       />
-      <Grid container justifyContent="flex" alignItems="right" marginBottom={2}>
-        <LoadingButton
-          variant="contained"
-          fullWidth
-          size="small"
-          sx={{ marginTop: "1rem" }}
-          onClick={VisitCreateButtonHandler}
-        >
-          Create
-        </LoadingButton>
-      </Grid>
     </React.Fragment>
   );
 };

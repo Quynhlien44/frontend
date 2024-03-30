@@ -1,5 +1,6 @@
 export { default as ClinicLayout } from "./ClinicLayout";
 
+export { default as LoginPage } from "./DoctorPages/Login/LoginPage";
 export { default as DoctorLayout } from "./DoctorPages/DoctorLayout";
 export { default as DoctorPets } from "./DoctorPages/Pet/DoctorPets";
 export { default as DoctorPetDetail } from "./DoctorPages/Pet/DoctorPetDetail";
