@@ -15,6 +15,15 @@ const OwnerAddVisitModalById = ({ isOpen, handleClose, petId }) => {
 
   const [existingVisits, setExistingVisits] = useState([]);
 
+  // Function to format date to UTC
+  const formatToUTCDate = (dateString) => {
+    const date = new Date(dateString);
+    const utcDate = new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+    );
+    return utcDate.toISOString().split("T")[0];
+  };
+
   const validationSchema = Yup.object().shape({
     date: Yup.date()
       .required("Date is required")
@@ -23,10 +32,13 @@ const OwnerAddVisitModalById = ({ isOpen, handleClose, petId }) => {
         "unique-date",
         "A visit already exists for this pet on the chosen date.",
         (value) => {
+          // Format the chosen date for comparison
+          const chosenDate = formatToUTCDate(value);
+          console.log("chosen date: ", chosenDate);
+
+          // Check if any existing visit matches the chosen date
           return (
-            existingVisits.filter(
-              (visit) => visit.date === value && visit.petId === petId
-            ).length === 0
+            existingVisits.filter((visit) => visit === chosenDate).length === 0
           );
         }
       ),
@@ -53,7 +65,9 @@ const OwnerAddVisitModalById = ({ isOpen, handleClose, petId }) => {
     const fetchExistingVisits = async () => {
       try {
         const res = await visitApi.getAll();
-        setExistingVisits(res);
+        let visitedDates = res.map((visit) => visit.date);
+        console.log("visited dates: ", visitedDates);
+        setExistingVisits(visitedDates);
       } catch (err) {
         console.log(err);
       }
