@@ -9,8 +9,7 @@ import {
   CircularProgress,
   Button,
 } from "@mui/material";
-import { AddVisitModalById } from "../../../components";
-import { useNavigate } from "react-router-dom";
+import { DoctorAddVisitModalById } from "../../../components";
 
 const DoctorPetDetail = () => {
   const { id } = useParams();
@@ -18,7 +17,6 @@ const DoctorPetDetail = () => {
   const [owner, setOwner] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isAddVisitModalOpen, setIsAddVisitModalOpen] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPetById = async () => {
@@ -50,7 +48,6 @@ const DoctorPetDetail = () => {
 
   const handleCloseAddVisitModal = () => {
     setIsAddVisitModalOpen(false);
-    navigate("/doctor/doctor/visits");
   };
 
   if (loading) {
@@ -129,7 +126,7 @@ const DoctorPetDetail = () => {
       </Button>
 
       {/* Add Visit Modal */}
-      <AddVisitModalById
+      <DoctorAddVisitModalById
         isOpen={isAddVisitModalOpen}
         handleClose={handleCloseAddVisitModal}
         petId={pet.id}

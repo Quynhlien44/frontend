@@ -1,7 +1,6 @@
 import React from "react";
 import { Modal, Box, TextField, Button } from "@mui/material";
 import { Formik, Form, Field } from "formik";
-import petApi from "../../services/petApi";
 
 const CreateNewPetModal = ({
   isOpen,

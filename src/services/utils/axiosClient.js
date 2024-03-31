@@ -2,21 +2,24 @@ import axios from "axios";
 import queryString from "query-string";
 import { BASE_URL } from "./configApi";
 
-let accessToken = localStorage.getItem("token");
-
 const axiosClient = axios.create({
   baseURL: BASE_URL,
   paramsSerializer: (params) => queryString.stringify({ params }),
 });
 
-axiosClient.interceptors.request.use((config) => {
-  return {
-    ...config,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`, // Set the access token dynamically
-    },
-  };
+axiosClient.interceptors.request.use(async (config) => {
+  try {
+    const accessToken = localStorage.getItem("token");
+    if (accessToken) {
+      config.headers = {
+        ...config.headers,
+        Authorization: `Bearer ${accessToken}`,
+      };
+    }
+  } catch (error) {
+    console.error("Error setting Authorization header:", error);
+  }
+  return config;
 });
 
 axiosClient.interceptors.response.use(

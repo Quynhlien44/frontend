@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import petApi from "../../../services/petApi";
-import userApi from "../../../services/userApi";
+
 import {
   Typography,
   Paper,
@@ -9,13 +9,13 @@ import {
   CircularProgress,
   Button,
 } from "@mui/material";
-import { AddVisitModalById } from "../../../components";
+import { OwnerAddVisitModalById } from "../../../components";
 import { useNavigate } from "react-router-dom";
 
 const OwnerPetDetail = () => {
   const { id } = useParams();
   const [pet, setPet] = useState(null);
-  const [owner, setOwner] = useState(null);
+  const [owner, setOwner] = useState(0);
   const [loading, setLoading] = useState(true);
   const [isAddVisitModalOpen, setIsAddVisitModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -28,14 +28,8 @@ const OwnerPetDetail = () => {
         setPet(response);
         setLoading(false);
 
-        if (response && response.ownerId) {
-          const ownerResponse = await userApi.getUser();
-          const owner = ownerResponse.find(
-            (user) => user.id === response.ownerId
-          );
-
-          setOwner(owner);
-        }
+        console.log("Owner Id: ", response.ownerId);
+        setOwner(response.ownerId);
       } catch (error) {
         setLoading(false);
       }
@@ -50,7 +44,20 @@ const OwnerPetDetail = () => {
 
   const handleCloseAddVisitModal = () => {
     setIsAddVisitModalOpen(false);
-    navigate("/owner/owner/visits");
+    
+  };
+
+  const getOwnerNameById = (ownerId) => {
+    switch (ownerId) {
+      case 1:
+        return "Lisa";
+      case 2:
+        return "John";
+      case 3:
+        return "Sophia";
+      default:
+        return "Unknown";
+    }
   };
 
   if (loading) {
@@ -99,13 +106,9 @@ const OwnerPetDetail = () => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            {owner ? (
-              <Typography variant="body1">
-                <strong>Owner:</strong> {owner.name} (ID: {owner.id})
-              </Typography>
-            ) : (
-              <Typography variant="body1">Owner not found</Typography>
-            )}
+            <Typography variant="body1">
+              <strong>Owner:</strong> {getOwnerNameById(owner)} (ID: {owner})
+            </Typography>
           </Grid>
         </Grid>
       </Paper>
@@ -121,7 +124,7 @@ const OwnerPetDetail = () => {
       </Button>
 
       {/* Add Visit Modal */}
-      <AddVisitModalById
+      <OwnerAddVisitModalById
         isOpen={isAddVisitModalOpen}
         handleClose={handleCloseAddVisitModal}
         petId={pet.id}

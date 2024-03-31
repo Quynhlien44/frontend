@@ -9,3 +9,4 @@ export { default as DoctorVisits } from "./DoctorPages/Visit/DoctorVisits";
 export { default as OwnerLayout } from "./OwnerPages/OwnerLayout";
 export { default as OwnerPets } from "./OwnerPages/Pet/OwnerPets";
 export { default as OwnerPetDetail } from "./OwnerPages/Pet/OwnerPetDetail";
+export { default as OwnerVisits } from "./OwnerPages/Visit/OwnerVisits";

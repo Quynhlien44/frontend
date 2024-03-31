@@ -15,7 +15,7 @@ import {
   OwnerLayout,
   OwnerPets,
   OwnerPetDetail,
-  //PetCreate,
+  OwnerVisits,
 } from "./pages";
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
         <Route path="/owner" element={<OwnerLayout />}>
           <Route path="/owner/owner/pets" index element={<OwnerPets />} />
           <Route path="/owner/owner/pets/:id" element={<OwnerPetDetail />} />
-          {/* <Route path="/owner/owner/visits/create" element={<VisitCreate />} /> */}
+          <Route path="/owner/owner/visits" element={<OwnerVisits />} />
         </Route>
       </Routes>
     </BrowserRouter>

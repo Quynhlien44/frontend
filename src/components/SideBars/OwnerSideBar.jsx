@@ -26,7 +26,7 @@ const OwnerSideBar = () => {
       icon: <PetsIcon />,
     },
     {
-      text: "Visit Create",
+      text: "Visits List",
       path: `owner/visits/`,
       icon: <PlaceOutlinedIcon />,
     },

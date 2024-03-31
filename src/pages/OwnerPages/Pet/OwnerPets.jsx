@@ -7,12 +7,14 @@ import {
   OwnerPetGrid,
   CreatePetButton,
 } from "../../../components";
+import { useNavigate } from "react-router-dom";
 
 const OwnerPets = () => {
   const [petList, setPetList] = useState([]);
   const [pageSize, setPageSize] = useState(9);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ownerId, setOwnerId] = useState(0);
+  const navigate = useNavigate();
 
   // TODO: Fetch ownerId on component mount
   useEffect(() => {
@@ -71,6 +73,7 @@ const OwnerPets = () => {
       };
       // Update petList with the new pet
       setPetList((prevPetList) => [...prevPetList, newPet]);
+      navigate(`${response.pet.id}`);
       handleCloseCreateModal();
     } catch (error) {
       alert("Error creating pet, please try again!");
