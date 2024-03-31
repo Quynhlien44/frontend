@@ -119,6 +119,8 @@ const OwnerAddVisitModalById = ({ isOpen, handleClose, petId }) => {
               rows={4}
               margin="normal"
               variant="outlined"
+              error={formik.touched.comment && Boolean(formik.errors.comment)}
+              helperText={formik.touched.comment && formik.errors.comment}
             />
             <div style={{ textAlign: "right", marginTop: 20 }}>
               <Button variant="contained" color="primary" type="submit">
