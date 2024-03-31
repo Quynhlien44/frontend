@@ -12,7 +12,24 @@ const OwnerPets = () => {
   const [petList, setPetList] = useState([]);
   const [pageSize, setPageSize] = useState(9);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ownerId, setOwnerId] = useState(0);
 
+  // TODO: Fetch ownerId on component mount
+  useEffect(() => {
+    const getPets = async () => {
+      try {
+        const res = await petApi.getAll();
+        if (res.length > 0) {
+          setOwnerId(res[0].ownerId);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getPets();
+  }, []);
+
+  // Fetch petList on component mount and when ownerId changes
   useEffect(() => {
     const getPets = async () => {
       try {
@@ -25,12 +42,13 @@ const OwnerPets = () => {
           dob: pet.dob,
         }));
         setPetList(transformedPetList);
+        console.log("res.ownerId", res[0].ownerId);
       } catch (err) {
         console.error(err);
       }
     };
     getPets();
-  }, [petList]);
+  }, [ownerId]);
 
   const handleOpenCreateModal = () => {
     setIsModalOpen(true);
@@ -38,6 +56,26 @@ const OwnerPets = () => {
 
   const handleCloseCreateModal = () => {
     setIsModalOpen(false);
+  };
+
+  // Function to handle adding a new pet
+  const handleAddNewPet = async (values) => {
+    try {
+      const response = await petApi.create(values);
+      const newPet = {
+        id: response.pet.id,
+        name: response.pet.name,
+        type: response.pet.petType,
+        status: response.pet.status,
+        dob: response.pet.dob,
+      };
+      // Update petList with the new pet
+      setPetList((prevPetList) => [...prevPetList, newPet]);
+      handleCloseCreateModal();
+    } catch (error) {
+      alert("Error creating pet, please try again!");
+      console.error("Error adding new pet:", error);
+    }
   };
 
   return (
@@ -61,6 +99,8 @@ const OwnerPets = () => {
       <CreateNewPetModal
         isOpen={isModalOpen}
         handleClose={handleCloseCreateModal}
+        ownerId={ownerId}
+        handleAddNewPet={handleAddNewPet}
       />
     </React.Fragment>
   );

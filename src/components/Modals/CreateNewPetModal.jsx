@@ -3,24 +3,17 @@ import { Modal, Box, TextField, Button } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import petApi from "../../services/petApi";
 
-const CreateNewPetModal = ({ isOpen, handleClose }) => {
+const CreateNewPetModal = ({
+  isOpen,
+  handleClose,
+  ownerId,
+  handleAddNewPet,
+}) => {
   const initialValues = {
     name: "",
     petType: "",
     dob: "",
-    ownerId: "",
-  };
-
-  const handleSubmit = async (values) => {
-    try {
-      const response = await petApi.create(values);
-      console.log("New Pet Created:", response);
-      // Close the modal or handle success message
-      handleClose();
-    } catch (error) {
-      console.error("Error creating pet:", error);
-      // Handle error, maybe show an error message
-    }
+    ownerId: ownerId,
   };
 
   return (
@@ -47,7 +40,7 @@ const CreateNewPetModal = ({ isOpen, handleClose }) => {
         </Button>
         <Formik
           initialValues={initialValues}
-          onSubmit={handleSubmit}
+          onSubmit={handleAddNewPet}
           validationSchema={""}
         >
           <Form>
@@ -81,16 +74,6 @@ const CreateNewPetModal = ({ isOpen, handleClose }) => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                variant="outlined"
-                required
-              />
-            </Box>
-            <Box mb={2}>
-              <Field
-                as={TextField}
-                fullWidth
-                name="ownerId"
-                label="Owner ID"
                 variant="outlined"
                 required
               />

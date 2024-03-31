@@ -2,7 +2,7 @@ import axios from "axios";
 import queryString from "query-string";
 import { BASE_URL } from "./configApi";
 
-let accessToken = ""; // Initialize as empty string
+let accessToken = localStorage.getItem("token");
 
 const axiosClient = axios.create({
   baseURL: BASE_URL,
@@ -31,9 +31,5 @@ axiosClient.interceptors.response.use(
     throw err;
   }
 );
-
-export const setAccessToken = (token) => {
-  accessToken = token; // Function to set the access token dynamically
-};
 
 export default axiosClient;

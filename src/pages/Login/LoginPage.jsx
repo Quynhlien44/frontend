@@ -13,17 +13,11 @@ const LoginPage = () => {
   const handleLogin = async () => {
     try {
       const response = await loginApi.login({ email, password });
-      setAccessToken(response.access_token);
+      localStorage.setItem("token", response.access_token);
       if (email === "doctor@pets.com" && password === "Pet1234") {
         navigate("/doctor");
-      } else if (
-        (email === "owner1@test.com" && password === "qwerty") ||
-        (email === "owner2@woof.net" && password === "Bark!") ||
-        (email === "owner3@abc.org" && password === "_Dog2023")
-      ) {
-        navigate("/owner");
       } else {
-        alert("Invalid email or password");
+        navigate("/owner");
       }
     } catch (err) {
       console.error("Error logging in", err);

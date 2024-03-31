@@ -3,10 +3,8 @@ import { Grid, FormControlLabel, Checkbox } from "@mui/material";
 import petApi from "../../../services/petApi";
 import {
   UpdateAPetModal,
-  CreateNewPetModal,
   PageHeader,
   DoctorPetGrid,
-  CreatePetButton,
 } from "../../../components";
 
 const DoctorPets = () => {
@@ -28,12 +26,13 @@ const DoctorPets = () => {
           dob: pet.dob,
         }));
         setPetList(transformedPetList);
+        console.log("petList test: ", res.data);
       } catch (err) {
         console.error(err);
       }
     };
     getPets();
-  }, [petList]);
+  }, []);
 
   const handleCheckboxChange = () => {
     setShowOnlyAlive((prevState) => !prevState);
@@ -48,13 +47,22 @@ const DoctorPets = () => {
     setIsUpdateModalOpen(false);
   };
 
+  // Function to handle updating a pet
   const handleUpdatePet = async (updatedPet) => {
     try {
       const response = await petApi.update(selectedPet.id, updatedPet);
-      const updatePetList = petList.map((pet) =>
-        pet.id === selectedPet.id ? { ...response, id: selectedPet.id } : pet
+      const updatedPetList = petList.map((pet) =>
+        pet.id === selectedPet.id
+          ? {
+              id: response.pet.id,
+              name: response.pet.name,
+              type: response.pet.petType,
+              status: response.pet.status,
+              dob: response.pet.dob,
+            }
+          : pet
       );
-      setPetList(updatePetList);
+      setPetList(updatedPetList);
       handleUpdateModalClose();
     } catch (err) {
       console.error(`Error updating pet ${updatedPet.name}`, err);
