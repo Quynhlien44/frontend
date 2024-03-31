@@ -8,4 +8,5 @@ export { default as CreateNewPetModal } from "./Modals/CreateNewPetModal";
 export { default as UpdateAPetModal } from "./Modals/UpdateAPetModal";
 export { default as AddVisitModalById } from "./Modals/AddVisitModalById";
 export { default as DoctorPetGrid } from "./Grids/DoctorPetGrid";
+export { default as OwnerPetGrid } from "./Grids/OwnerPetGrid";
 export { default as CreatePetButton } from "./Buttons/CreatePetButton";

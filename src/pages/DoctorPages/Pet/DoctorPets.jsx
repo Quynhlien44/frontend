@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { DataGrid } from "@mui/x-data-grid";
-import { Grid, FormControlLabel, Checkbox, Button } from "@mui/material";
+import { Grid, FormControlLabel, Checkbox } from "@mui/material";
 import petApi from "../../../services/petApi";
 import {
   UpdateAPetModal,
@@ -15,7 +13,6 @@ const DoctorPets = () => {
   const [petList, setPetList] = useState([]);
   const [pageSize, setPageSize] = useState(9);
   const [showOnlyAlive, setShowOnlyAlive] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPet, setSelectedPet] = useState(null);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
@@ -40,14 +37,6 @@ const DoctorPets = () => {
 
   const handleCheckboxChange = () => {
     setShowOnlyAlive((prevState) => !prevState);
-  };
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
   };
 
   const handleUpdateModalOpen = (pet) => {
@@ -94,8 +83,6 @@ const DoctorPets = () => {
           }
           label="Show Only Alive Pets"
         />
-        {/* Button to Create New Pet */}
-        <CreatePetButton onClick={handleOpenModal} />
       </Grid>
 
       <DoctorPetGrid
@@ -104,8 +91,6 @@ const DoctorPets = () => {
         pageSize={pageSize}
       />
 
-      {/* Modal for Creating New Pet */}
-      <CreateNewPetModal isOpen={isModalOpen} handleClose={handleCloseModal} />
       {/* Modal for Updating a Pet */}
       <UpdateAPetModal
         isOpen={isUpdateModalOpen}

@@ -9,11 +9,13 @@ import {
   ClinicLayout,
   LoginPage,
   DoctorLayout,
-  OwnerLayout,
   DoctorPets,
-  PetDetail,
-  //PetCreate,
   DoctorVisits,
+  DoctorPetDetail,
+  OwnerLayout,
+  OwnerPets,
+  OwnerPetDetail,
+  //PetCreate,
 } from "./pages";
 
 function App() {
@@ -24,13 +26,12 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/doctor" element={<DoctorLayout />}>
           <Route path="/doctor/doctor/pets" index element={<DoctorPets />} />
-          <Route path="/doctor/doctor/pets/:id" element={<PetDetail />} />
+          <Route path="/doctor/doctor/pets/:id" element={<DoctorPetDetail />} />
           <Route path="/doctor/doctor/visits" element={<DoctorVisits />} />
         </Route>
         <Route path="/owner" element={<OwnerLayout />}>
-          {/* <Route path="/owner/owner/pets" index element={<Pet />} /> */}
-          {/* <Route path="/owner/owner/pets/create" element={<PetCreate />} />*/}
-          {/* <Route path="/owner/owner/pets/:id" element={<PetDetail />} /> */}
+          <Route path="/owner/owner/pets" index element={<OwnerPets />} />
+          <Route path="/owner/owner/pets/:id" element={<OwnerPetDetail />} />
           {/* <Route path="/owner/owner/visits/create" element={<VisitCreate />} /> */}
         </Route>
       </Routes>

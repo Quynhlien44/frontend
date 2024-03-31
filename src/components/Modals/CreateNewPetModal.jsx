@@ -23,8 +23,6 @@ const CreateNewPetModal = ({ isOpen, handleClose }) => {
     }
   };
 
-  
-
   return (
     <Modal open={isOpen} onClose={handleClose}>
       <Box
@@ -40,7 +38,18 @@ const CreateNewPetModal = ({ isOpen, handleClose }) => {
           maxWidth: "90%",
         }}
       >
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={""}>
+        {/* Close button */}
+        <Button
+          onClick={handleClose}
+          style={{ position: "absolute", top: 5, right: 5, color: "red" }}
+        >
+          Close
+        </Button>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={""}
+        >
           <Form>
             <Box mb={2}>
               <Field

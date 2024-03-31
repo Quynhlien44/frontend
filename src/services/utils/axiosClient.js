@@ -26,7 +26,7 @@ axiosClient.interceptors.response.use(
   },
   (err) => {
     if (err.response) {
-      console.error("Error! Network error!");
+      console.error("Error! Network error!", err.response);
     }
     throw err;
   }

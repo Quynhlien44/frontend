@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import petApi from "../../services/petApi";
-import userApi from "../../services/userApi";
+import petApi from "../../../services/petApi";
+import userApi from "../../../services/userApi";
 import {
   Typography,
   Paper,
@@ -9,10 +9,10 @@ import {
   CircularProgress,
   Button,
 } from "@mui/material";
-import { AddVisitModalById } from "../../components";
+import { AddVisitModalById } from "../../../components";
 import { useNavigate } from "react-router-dom";
 
-const PetDetail = () => {
+const OwnerPetDetail = () => {
   const { id } = useParams();
   const [pet, setPet] = useState(null);
   const [owner, setOwner] = useState(null);
@@ -50,7 +50,7 @@ const PetDetail = () => {
 
   const handleCloseAddVisitModal = () => {
     setIsAddVisitModalOpen(false);
-    navigate("/doctor/doctor/visits");
+    navigate("/owner/owner/visits");
   };
 
   if (loading) {
@@ -110,14 +110,6 @@ const PetDetail = () => {
         </Grid>
       </Paper>
 
-      {/* Doctor's Only Comment */}
-      <Paper elevation={3} style={{ padding: 20, marginBottom: 20 }}>
-        <Typography variant="h5" gutterBottom>
-          Doctor's Only Comment
-        </Typography>
-        <Typography variant="body1">{pet.doctorsComment}</Typography>
-      </Paper>
-
       {/* "Book a Visit" Button */}
       <Button
         variant="contained"
@@ -138,4 +130,4 @@ const PetDetail = () => {
   );
 };
 
-export default PetDetail;
+export default OwnerPetDetail;
